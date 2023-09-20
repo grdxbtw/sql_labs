@@ -5,7 +5,7 @@ LIMIT 10 OFFSET 10;
 
 SELECT name
 FROM cities
-ORDER BY  name DESC
+ORDER BY name DESC
 LIMIT 30;
 
 SELECT name
