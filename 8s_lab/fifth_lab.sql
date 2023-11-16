@@ -38,9 +38,8 @@ CREATE TABLE task_assignees (
 
 CREATE TABLE files (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name VARCHAR(100) NOT NULL,
     task_id INTEGER,
     project_id INTEGER,
     file_path VARCHAR(255) NOT NULL,
-    FOREIGN KEY (task_id) REFERENCES tasks (id),
-    FOREIGN KEY (project_id) REFERENCES projects (id)
 );

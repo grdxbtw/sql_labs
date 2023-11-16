@@ -9,28 +9,34 @@ FROM cities c
 JOIN regions r ON c.region = r.uuid
 WHERE r.name = 'Nord'
 
-CREATE TABLE MetroLines (
-    LineID INT PRIMARY KEY,
-    LineName VARCHAR(50) NOT NULL,
-    CityName VARCHAR(50) NOT NULL,
-    StartStation VARCHAR(50) NOT NULL,
-    EndStation VARCHAR(50) NOT NULL,
-    LineLength DECIMAL(10, 2) NOT NULL,
-    StationsCount INT NOT NULL
+CREATE TABLE metro_lines(
+    id INT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    city_name VARCHAR(50) NOT NULL,
+    line_length DECIMAL(10, 2) NOT NULL,
+    stations_count INT NOT NULL
 );
 
-CREATE TABLE MetroStations (
-    StationID INT PRIMARY KEY,
-    StationName VARCHAR(50) NOT NULL,
-    LineID INT,
-    FOREIGN KEY (LineID) REFERENCES MetroLines (LineID)
+CREATE TABLE stations(
+    id INT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    line_id INT,
+    prev_station_id INT DEFAULT NULL,
+    next_station_id INT DEFAULT NULL,
+    FOREIGN KEY (line_id) REFERENCES metro_lines(id)
 );
 
-CREATE TABLE MetroConnections (
-    ConnectionID INT PRIMARY KEY,
-    LineID1 INT,
-    LineID2 INT,
-    TransferStation VARCHAR(50) NOT NULL,
-    FOREIGN KEY (LineID1) REFERENCES MetroLines (LineID),
-    FOREIGN KEY (LineID2) REFERENCES MetroLines (LineID)
+CREAT TABLE transfers(
+    id INT PRIMARY KEY,
+    station_id_from INT DEFAULT NULL,
+    station_id_to INT DEFAULT NULL	
+);
+
+CREATE TABLE connections(
+    connection_id INT PRIMARY KEY,
+    line_id1 INT,
+    line_id2 INT,
+    tranfer_station VARCHAR(50) NOT NULL,
+    FOREIGN KEY (line_id1 ) REFERENCES metro_lines(id),
+    FOREIGN KEY (line_id2) REFERENCES metro_lines(id)
 );
